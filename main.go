@@ -20,7 +20,6 @@ func main() {
 
 	parseTicker := time.NewTicker(15 * time.Minute)
 	clearTicker := time.NewTicker(6 * time.Hour)
-	updateTicker:=time.NewTicker(1*time.Minute)
 	done := make(chan bool)
 
 	go bot.StartBot(schedule, &m)
@@ -45,32 +44,6 @@ func main() {
 			}
 		}
 	}()
-	
-	go func() {
-		for {
-			select {
-			case <-done:
-				return
-			case _=<-updateTicker.C:
-				checkTime(&parseTicker)
-			}
-		}
-	}()
 	wg.Wait()
 }
 
-func checkTime(ticker **time.Ticker) {
-	if time.Now().Hour()>21 || time.Now().Weekday()==time.Sunday {
-		*ticker=time.NewTicker(time.Hour)
-		log.Println("Set interval: 1 Hour")
-		log.Println(*ticker)
-	} else if time.Now().Hour() < 12 {
-		*ticker=time.NewTicker(30*time.Minute)
-		log.Println("Set interval: 30 Minutes")
-		log.Println(*ticker)
-	} else {
-		*ticker=time.NewTicker(15*time.Minute)
-		log.Println("Set interval: 15 minutes")
-		log.Println(*ticker)
-	}
-}
