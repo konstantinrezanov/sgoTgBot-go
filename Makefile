@@ -9,4 +9,5 @@ build:
 run:
 	xvfb-run ./sgobot 2>>bot.log &
 config:
-	read -p ""
+	echo "${login} $(pass) $(token)" > ~/.config/sgobot/cred.config
+	
