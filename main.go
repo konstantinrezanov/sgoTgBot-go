@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"sgoTgBot-go/bot"
 	"sgoTgBot-go/conversion"
 	"sync"
